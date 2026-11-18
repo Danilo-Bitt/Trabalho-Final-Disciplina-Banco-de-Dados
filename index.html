@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilhadão Açaí - Controle de Estoque</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo_container">
+            <img src="imagens/logo_pilhadao.png" alt="Logo Pilhadão Açaí">
+        </div>
+        <ul class="menu_navegacao">
+            <li><a href="index.html" class="ativo">Visão Geral</a></li>
+            <li><a href="produtos.html">Produtos</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="fornecedores.html">Fornecedores</a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+        </ul>
+        <div class="sidebar_rodape">
+            <button id="btn_logout" class="btn_sair">Sair do Sistema</button>
+        </div>
+    </aside>
+
+    <main class="conteudo_principal">
+        <header class="topbar">
+            <div>
+                <h1>Visão Geral do Estoque</h1>
+                <p id="saudacao_usuario">Bem-vindo ao painel de controle</p>
+            </div>
+            <button id="btn_nova_movimentacao" class="btn_primario">+ Registrar Movimentação</button>
+        </header>
+
+        <section class="grid_cards">
+            <div class="card_resumo">
+                <span>Total de Produtos</span>
+                <h2 id="kpi_total_produtos">0</h2>
+            </div>
+            <div class="card_resumo alerta">
+                <span>Estoque Mínimo</span>
+                <h2 id="kpi_estoque_baixo">0</h2>
+            </div>
+            <div class="card_resumo critico">
+                <span>Próximos ao Vencimento</span>
+                <h2 id="kpi_vencimento">0</h2>
+            </div>
+        </section>
+
+        <section class="container_tabela">
+            <h3>Últimas Movimentações de Estoque</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data / Hora</th>
+                        <th>Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Responsável</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela_movimentacoes">
+                    <!-- Preenchido via JS pelo Içan -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal de Registro de Movimentação de Estoque (Entrada / Saída) -->
+    <div id="modal_movimentacao" class="modal_overlay oculto">
+        <div class="modal_conteudo">
+            <div class="modal_cabecalho">
+                <h2>Registrar Movimentação de Estoque</h2>
+                <button type="button" id="btn_fechar_modal_movimentacao" class="btn_fechar_modal">&times;</button>
+            </div>
+
+            <form id="form_movimentacao">
+                <div class="grupo_formulario">
+                    <label for="produto_idproduto">Produto *</label>
+                    <select id="produto_idproduto" name="produto_idproduto" required>
+                        <option value="">Selecione o produto...</option>
+                        <!-- Preenchido via JS pelo Içan -->
+                    </select>
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="tipo">Tipo de Movimentação *</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="ENTRADA">Entrada (Compra / Reposição)</option>
+                            <option value="SAIDA">Saída (Consumo / Baixa)</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="quantidade">Quantidade *</label>
+                        <input type="number" id="quantidade" name="quantidade" step="0.01" min="0.01" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="grupo_formulario">
+                    <label for="descricao">Observação / Motivo *</label>
+                    <textarea id="descricao" name="descricao" rows="3" maxlength="150" required placeholder="Ex: Compra NF 1245 ou Uso no turno da noite..."></textarea>
+                </div>
+
+                <div class="modal_rodape">
+                    <button type="button" id="btn_cancelar_movimentacao" class="btn_secundario">Cancelar</button>
+                    <button type="submit" class="btn_primario">Confirmar Movimentação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

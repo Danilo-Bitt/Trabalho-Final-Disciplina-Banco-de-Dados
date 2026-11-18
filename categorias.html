@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilhadão Açaí - Categorias</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo_container">
+            <img src="imagens/logo_pilhadao.png" alt="Logo Pilhadão Açaí">
+        </div>
+        <ul class="menu_navegacao">
+            <li><a href="index.html">Visão Geral</a></li>
+            <li><a href="produtos.html">Produtos</a></li>
+            <li><a href="categorias.html" class="ativo">Categorias</a></li>
+            <li><a href="fornecedores.html">Fornecedores</a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+        </ul>
+        <div class="sidebar_rodape">
+            <button id="btn_logout" class="btn_sair">Sair do Sistema</button>
+        </div>
+    </aside>
+
+    <main class="conteudo_principal">
+        <header class="topbar">
+            <div>
+                <h1>Gerenciamento de Categorias</h1>
+                <p>Organize os grupos de insumos, embalagens, utensílios e equipamentos</p>
+            </div>
+            <button id="btn_abrir_modal_categoria" class="btn_primario">+ Nova Categoria</button>
+        </header>
+
+        <section class="barra_filtros">
+            <input type="text" id="input_busca_categoria" placeholder="Buscar categoria pelo nome...">
+        </section>
+
+        <section class="container_tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome da Categoria</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela_categorias">
+                    <!-- Preenchido via JS pelo Içan -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal de Cadastro e Edição de Categoria (Create / Update) -->
+    <div id="modal_categoria" class="modal_overlay oculto">
+        <div class="modal_conteudo">
+            <div class="modal_cabecalho">
+                <h2 id="titulo_modal_categoria">Nova Categoria</h2>
+                <button type="button" id="btn_fechar_modal_categoria" class="btn_fechar_modal">&times;</button>
+            </div>
+
+            <form id="form_categoria">
+                <input type="hidden" id="idcategoria" name="idcategoria">
+
+                <div class="grupo_formulario">
+                    <label for="nome">Nome da Categoria *</label>
+                    <input type="text" id="nome" name="nome" maxlength="45" required placeholder="Ex: Insumos Perecíveis">
+                </div>
+
+                <div class="grupo_formulario">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="3" maxlength="200" placeholder="Detalhe quais itens pertencem a esta categoria..."></textarea>
+                </div>
+
+                <div class="modal_rodape">
+                    <button type="button" id="btn_cancelar_categoria" class="btn_secundario">Cancelar</button>
+                    <button type="submit" class="btn_primario">Salvar Categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/categorias.js"></script>
+</body>
+</html>

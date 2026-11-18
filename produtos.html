@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilhadão Açaí - Produtos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo_container">
+            <img src="imagens/logo_pilhadao.png" alt="Logo Pilhadão Açaí">
+        </div>
+        <ul class="menu_navegacao">
+            <li><a href="index.html">Visão Geral</a></li>
+            <li><a href="produtos.html" class="ativo">Produtos</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="fornecedores.html">Fornecedores</a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+        </ul>
+        <div class="sidebar_rodape">
+            <button id="btn_logout" class="btn_sair">Sair do Sistema</button>
+        </div>
+    </aside>
+
+    <main class="conteudo_principal">
+        <header class="topbar">
+            <div>
+                <h1>Gerenciamento de Produtos</h1>
+                <p>Cadastre e acompanhe insumos, embalagens e utensílios</p>
+            </div>
+            <button id="btn_abrir_modal_produto" class="btn_primario">+ Novo Produto</button>
+        </header>
+
+        <section class="barra_filtros">
+            <input type="text" id="input_busca_produto" placeholder="Buscar produto pelo nome...">
+            <select id="select_filtro_categoria">
+                <option value="">Todas as Categorias</option>
+                <!-- Preenchido via JS pelo Içan -->
+            </select>
+        </section>
+
+        <section class="container_tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Estoque Atual</th>
+                        <th>Est. Mínimo</th>
+                        <th>Preço Custo</th>
+                        <th>Validade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela_produtos">
+                    <!-- Preenchido via JS pelo Içan -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal de Cadastro e Edição de Produto (Create / Update) -->
+    <div id="modal_produto" class="modal_overlay oculto">
+        <div class="modal_conteudo">
+            <div class="modal_cabecalho">
+                <h2 id="titulo_modal_produto">Novo Produto</h2>
+                <button type="button" id="btn_fechar_modal_produto" class="btn_fechar_modal">&times;</button>
+            </div>
+
+            <form id="form_produto">
+                <input type="hidden" id="idproduto" name="idproduto">
+
+                <div class="grupo_formulario">
+                    <label for="nome">Nome do Produto *</label>
+                    <input type="text" id="nome" name="nome" maxlength="100" required placeholder="Ex: Caixa de Açaí 10L">
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="categoria_idcategoria">Categoria *</label>
+                        <select id="categoria_idcategoria" name="categoria_idcategoria" required>
+                            <option value="">Selecione...</option>
+                            <!-- Preenchido via JS pelo Içan -->
+                        </select>
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="unidade_medida">Unidade de Medida *</label>
+                        <select id="unidade_medida" name="unidade_medida" required>
+                            <option value="UN">Unidade (UN)</option>
+                            <option value="CX">Caixa (CX)</option>
+                            <option value="KG">Quilograma (KG)</option>
+                            <option value="L">Litro (L)</option>
+                            <option value="PCT">Pacote (PCT)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="quantidade_estoque">Quantidade Atual *</label>
+                        <input type="number" id="quantidade_estoque" name="quantidade_estoque" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="estoque_minimo">Estoque Mínimo *</label>
+                        <input type="number" id="estoque_minimo" name="estoque_minimo" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="preco_custo">Preço de Custo (R$) *</label>
+                        <input type="number" id="preco_custo" name="preco_custo" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="data_validade">Data de Validade (opcional)</label>
+                        <input type="date" id="data_validade" name="data_validade">
+                    </div>
+                </div>
+
+                <div class="modal_rodape">
+                    <button type="button" id="btn_cancelar_produto" class="btn_secundario">Cancelar</button>
+                    <button type="submit" class="btn_primario">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Vínculo Produto x Fornecedor (Tabela Associativa N:M) -->
+    <div id="modal_produto_fornecedor" class="modal_overlay oculto">
+        <div class="modal_conteudo modal_largo">
+            <div class="modal_cabecalho">
+                <h2 id="titulo_modal_pf">Fornecedores do Produto</h2>
+                <button type="button" id="btn_fechar_modal_pf" class="btn_fechar_modal">&times;</button>
+            </div>
+
+            <form id="form_produto_fornecedor">
+                <input type="hidden" id="pf_produto_idproduto" name="produto_idproduto">
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="pf_fornecedor_idfornecedor">Fornecedor *</label>
+                        <select id="pf_fornecedor_idfornecedor" name="fornecedor_idfornecedor" required>
+                            <option value="">Selecione o fornecedor...</option>
+                            <!-- Preenchido via JS pelo Içan -->
+                        </select>
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="pf_preco_fornecedor">Preço de Cotação (R$) *</label>
+                        <input type="number" id="pf_preco_fornecedor" name="preco_fornecedor" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="pf_codigo_sku_fornecedor">Código SKU no Fornecedor</label>
+                        <input type="text" id="pf_codigo_sku_fornecedor" name="codigo_sku_fornecedor" maxlength="30" placeholder="Ex: FORN-8842">
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="pf_prazo_entrega_dias">Prazo de Entrega (Dias) *</label>
+                        <input type="number" id="pf_prazo_entrega_dias" name="prazo_entrega_dias" min="0" required placeholder="Ex: 2">
+                    </div>
+                </div>
+
+                <div class="modal_rodape">
+                    <button type="submit" class="btn_primario">+ Vincular Fornecedor</button>
+                </div>
+            </form>
+
+            <h4 class="subtitulo_modal">Fornecedores Vinculados a este Item</h4>
+            <div class="container_tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fornecedor</th>
+                            <th>Preço (R$)</th>
+                            <th>SKU</th>
+                            <th>Prazo (Dias)</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela_produto_fornecedor">
+                        <!-- Preenchido via JS pelo Içan -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/produtos.js"></script>
+</body>
+</html>

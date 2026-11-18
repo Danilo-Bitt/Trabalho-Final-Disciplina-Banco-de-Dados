@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilhadão Açaí - Usuários</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo_container">
+            <img src="imagens/logo_pilhadao.png" alt="Logo Pilhadão Açaí">
+        </div>
+        <ul class="menu_navegacao">
+            <li><a href="index.html">Visão Geral</a></li>
+            <li><a href="produtos.html">Produtos</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="fornecedores.html">Fornecedores</a></li>
+            <li><a href="usuarios.html" class="ativo">Usuários</a></li>
+        </ul>
+        <div class="sidebar_rodape">
+            <button id="btn_logout" class="btn_sair">Sair do Sistema</button>
+        </div>
+    </aside>
+
+    <main class="conteudo_principal">
+        <header class="topbar">
+            <div>
+                <h1>Gerenciamento de Usuários</h1>
+                <p>Controle os colaboradores autorizados a registrar movimentações no estoque</p>
+            </div>
+            <button id="btn_abrir_modal_usuario" class="btn_primario">+ Novo Usuário</button>
+        </header>
+
+        <section class="barra_filtros">
+            <input type="text" id="input_busca_usuario" placeholder="Buscar usuário pelo nome ou login...">
+            <select id="select_filtro_cargo">
+                <option value="">Todos os Cargos</option>
+                <option value="Gerente">Gerente</option>
+                <option value="Estoquista">Estoquista</option>
+                <option value="Atendente">Atendente</option>
+            </select>
+        </section>
+
+        <section class="container_tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do Colaborador</th>
+                        <th>Cargo</th>
+                        <th>Login de Acesso</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela_usuarios">
+                    <!-- Preenchido via JS pelo Içan -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal de Cadastro e Edição de Usuário (Create / Update) -->
+    <div id="modal_usuario" class="modal_overlay oculto">
+        <div class="modal_conteudo">
+            <div class="modal_cabecalho">
+                <h2 id="titulo_modal_usuario">Novo Usuário</h2>
+                <button type="button" id="btn_fechar_modal_usuario" class="btn_fechar_modal">&times;</button>
+            </div>
+
+            <form id="form_usuario">
+                <input type="hidden" id="idusuario" name="idusuario">
+
+                <div class="grupo_formulario">
+                    <label for="nome_usuario">Nome Completo *</label>
+                    <input type="text" id="nome_usuario" name="nome_usuario" maxlength="45" required placeholder="Ex: Danilo Bittencourt">
+                </div>
+
+                <div class="linha_formulario">
+                    <div class="grupo_formulario">
+                        <label for="cargo">Cargo / Função *</label>
+                        <select id="cargo" name="cargo" required>
+                            <option value="">Selecione...</option>
+                            <option value="Gerente">Gerente</option>
+                            <option value="Estoquista">Estoquista</option>
+                            <option value="Atendente">Atendente</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo_formulario">
+                        <label for="login">Login de Acesso *</label>
+                        <input type="text" id="login" name="login" maxlength="45" required placeholder="Ex: danilo.gerente">
+                    </div>
+                </div>
+
+                <div class="grupo_formulario">
+                    <label for="senha" id="label_senha">Senha de Acesso *</label>
+                    <input type="password" id="senha" name="senha" maxlength="45" required placeholder="Digite a senha do colaborador">
+                </div>
+
+                <div class="modal_rodape">
+                    <button type="button" id="btn_cancelar_usuario" class="btn_secundario">Cancelar</button>
+                    <button type="submit" class="btn_primario">Salvar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/usuarios.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilhadão Açaí - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina_login">
+
+    <main class="container_login">
+        <div class="cabecalho_login">
+            <img src="imagens/logo_pilhadao.png" alt="Logo Pilhadão Açaí">
+            <h1>Controle de Estoque</h1>
+            <p>Informe suas credenciais para acessar o painel</p>
+        </div>
+
+        <form id="form_login">
+            <div class="grupo_formulario">
+                <label for="login">Usuário (Login) *</label>
+                <input type="text" id="login" name="login" maxlength="45" required placeholder="Digite seu login">
+            </div>
+
+            <div class="grupo_formulario">
+                <label for="senha">Senha *</label>
+                <input type="password" id="senha" name="senha" maxlength="45" required placeholder="Digite sua senha">
+            </div>
+
+            <p id="mensagem_erro_login" class="mensagem_erro oculto">Usuário ou senha inválidos.</p>
+
+            <button type="submit" class="btn_primario btn_bloco">Entrar no Sistema</button>
+        </form>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
